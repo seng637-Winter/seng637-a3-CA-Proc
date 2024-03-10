@@ -20,37 +20,47 @@ Text…
 
 calculateColumnTotal
 
+Data Flow Graph:
+![Data Flow Graph](.\media\CalculateColumnTotalDFG.png)
+
 Def-Use per statement:
 | Statement| Defined| Used|
 |-----|-----|-----|
-|1|data, column| |
-|2| | data|
-|3| total| | 
-|4| rowCount| data|
-|5| r| rowcount, r|
-|6| n| data, r, column|
-|7| | n| 
-|8| total | n|
-|9|
-|10| 
-|11| r2| rowCount, r2|
-|12| n| data, r2, column|
-|13| | n|
-|14| total | n|
-|15| | | 
-|16| | | 
-|17| | total|
+|0|data, column| |
+|1| | data|
+|2| total| | 
+|3| rowCount| data|
+|4| r| rowcount, r|
+|5| n| data, r, column|
+|6| | n| 
+|7| total | n|
+|8| r2| rowCount, r2|
+|9| n| data, r2, column|
+|10| | n|
+|11| total | n|
+|12| | total|
 
 Def-Use Pairs by Variable:
 | Variable | Pairs |
 |----- | ----- |
-| data | (1,2), (1,4), (1,6), (1,12) | 
-| column | (1,6), (1,12)|
-| total| (3,17), (8,17), (14,17) |
-|rowCount|(4,5), (4,11) |
-|r|(5,6)|
-|n| (6,7), (6,8), (12,13), (12,14) |
-|r2| (11,12)| 
+| data | (0,1), (0,3), (0,5), (0,9) | 
+| column | (0,5), (0,9)|
+| total| (2,12), (7,12), (11,12) |
+|rowCount|(3,4), (3,8) |
+|r|(4,5)|
+|n| (5,6), (5,7), (9,10), (9,11)|
+|r2| (8,9)| 
+
+Test Case D-U Coverage:
+| Test Case| Covered D-U Pairs|
+| ----- | ----- | 
+| calculateColumnTotalNullDataShouldThrowException()| data (0,1)|
+| calculateColumnTotalOfColumn0ShouldReturn3()| Data ((0,1), (0,3), (0,5), (0,9)), column ((0,5)), total ((7,12)), rowCount ((3,4), (3,8)), r (4,5), n ((5,6), (5,7)) |
+|calculateColumnTotalOfColumn1ShouldReturn0()| Data ((0,1), (0,3), (0,5), (0,9)), column ((0,5)), total ((7,12)), rowCount ((3,4), (3,8)), r (4,5), n ((5,6), (5,7)) |
+| calculateColumnTotalOfColumn2ShouldReturn3()|Data ((0,1), (0,3), (0,5), (0,9)), column ((0,5)), total ((7,12)), rowCount ((3,4), (3,8)), r (4,5), n ((5,6), (5,7)) |
+|belowZeroColumnShouldThrowException()| column (0,5)|
+|aboveColumnCountColumnShouldThrowException()| column (0,5)|
+
 
 # 3 A detailed description of the testing strategy for the new unit test
 
