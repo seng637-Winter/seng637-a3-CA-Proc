@@ -16,9 +16,9 @@ for each group. Please see each lab document for details.)
 
 Text…
 
-# 2 Manual data-flow coverage calculations for DataUtilities.calculateColumnTotal and Y methods
+# 2 Manual data-flow coverage calculations for DataUtilities.calculateColumnTotal and Range.getLength methods
 
-calculateColumnTotal
+## Analysis of DataUtilities.calculateColumnTotal()
 
 Data Flow Graph:
 ![Data Flow Graph](.\media\CalculateColumnTotalDFG.png)
@@ -60,6 +60,41 @@ Test Case D-U Coverage:
 | calculateColumnTotalOfColumn2ShouldReturn3()|Data ((0,1), (0,3), (0,5), (0,9)), column ((0,5)), total ((7,12)), rowCount ((3,4), (3,8)), r (4,5), n ((5,6), (5,7)) |
 |belowZeroColumnShouldThrowException()| column (0,5)|
 |aboveColumnCountColumnShouldThrowException()| column (0,5)|
+|Not Tested| column (0,9), total ((2,12), (11,12)), r2 (8,9), n ((9,10), (9,11))|
+
+## Analysis of Range.getLength():
+
+Data Flow Graph:
+
+![Data Flow Graph](.\media\getLengthCFG.png)
+
+Def-Use per statement:
+| Statement| Defined| Used|
+|-----|-----|-----|
+|0| lower, upper| |
+|1| | lower, upper|
+|2| msg| | 
+|3| | msg|
+|4| | lower, upper|
+
+Def-Use Pairs by Variable:
+| Variable | Pairs |
+|----- | ----- |
+|lower| (0,1), (0,4)|
+|upper| (0,1), (0,4)|
+|msg| (2,3)|
+
+Test Case D-U Coverage:
+| Test Case| Covered D-U Pairs|
+| ----- | ----- | 
+|getLengthPosPosRange()| lower((0,1), (0,4)), upper ((0,1), (0,4)) |
+|getLengthZeroPosRange()| lower((0,1), (0,4)), upper ((0,1), (0,4)) |
+|getLengthNegZeroRange() | lower((0,1), (0,4)), upper ((0,1), (0,4)) |
+|getLengthNegNegRange()| lower((0,1), (0,4)), upper ((0,1), (0,4)) |
+|getLengthNegPosRange()| lower((0,1), (0,4)), upper ((0,1), (0,4)) |
+|getLengthZeroLengthRange()| lower((0,1), (0,4)), upper ((0,1), (0,4)) |
+|getLengthInfInfRange()| lower((0,1), (0,4)), upper ((0,1), (0,4)) |
+| Not Tested| msg(2,3)|
 
 
 # 3 A detailed description of the testing strategy for the new unit test
