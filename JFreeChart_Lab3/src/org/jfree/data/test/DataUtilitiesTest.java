@@ -18,6 +18,8 @@ import org.junit.rules.ExpectedException;
 
 public class DataUtilitiesTest extends DataUtilities {
 	
+	private int[] rows1 = {0,1}; 
+	private int[] cols1 = {0,1}; 
 
 	@BeforeClass 
 	public static void setUpBeforeClass() throws Exception {
@@ -26,6 +28,7 @@ public class DataUtilitiesTest extends DataUtilities {
 
     @Before
     public void setUp() throws Exception {
+    	
     }
     
     @Rule
@@ -503,7 +506,7 @@ public class DataUtilitiesTest extends DataUtilities {
         	atLeast(1).of(data).getItemCount();
             will(returnValue(1));
             
-        	oneOf(data).getValue(0);
+        	atLeast(1).of(data).getValue(0);
             will(returnValue((10))); 
             
             oneOf(data).getKey(0);
@@ -512,7 +515,7 @@ public class DataUtilitiesTest extends DataUtilities {
         }});
     	
     	assertEquals("The key 0 in data {0, 10} should return 1", 
-    			1, DataUtilities.getCumulativePercentages(data).getValue(0));
+    			1.0, DataUtilities.getCumulativePercentages(data).getValue(0));
     }
     
     // #3
@@ -525,13 +528,13 @@ public class DataUtilitiesTest extends DataUtilities {
         	atLeast(1).of(data).getItemCount();
             will(returnValue(3));         
             
-            oneOf(data).getKey(0);
+            atLeast(1).of(data).getKey(0);
             will(returnValue((0)));
             
-            oneOf(data).getKey(1);
+            atLeast(1).of(data).getKey(1);
             will(returnValue((1)));
             
-            oneOf(data).getKey(2);
+            atLeast(1).of(data).getKey(2);
             will(returnValue((2)));
            
             atLeast(1).of(data).getValue(0);
@@ -666,6 +669,466 @@ public class DataUtilitiesTest extends DataUtilities {
     	assertEquals("The key 3 in data should return 1.5", 
     			1.5, DataUtilities.getCumulativePercentages(data).getValue(1));
     }
+    
+    //----------------------Assignment 3 classes----------------------------------
+    @Test
+    public void testEqualWithNull() {
+    	double[][] arr = {{1,2},{3,4}};
+    	//behaviour is undefined for two nulls (assumed false here)
+    	assertFalse("Should return false", DataUtilities.equal(null, arr));
+    	assertFalse("Should return false", DataUtilities.equal(arr, null));
+    	assertFalse("Should return false", DataUtilities.equal(null, null));
+    	
+    }
+    
+    @Test
+    public void notEqualDifferentSize() {
+    	double[][] arr1 = {{1,2},{3,4}};
+    	double[][] arr2 = {{1,2},{3}};
+    	double[][] arr3 = {{1,2}};
+    	assertFalse("Should return false", DataUtilities.equal(arr1, arr2));
+    	assertFalse("Should return false", DataUtilities.equal(arr2, arr1));
+    	assertFalse("Should return false", DataUtilities.equal(arr3, arr1));
+    }
+    
+    @Test
+    public void notEqualSameSize() {
+    	double[][] arr1 = {{1,2},{3,4}};
+    	double[][] arr2 = {{1,2},{3,6}};
+    	double[][] arr3 = {{56,3},{3,6}};
+    	assertFalse("Should return false", DataUtilities.equal(arr1, arr2));
+    	assertFalse("Should return false", DataUtilities.equal(arr2, arr1));
+    	assertFalse("Should return false", DataUtilities.equal(arr3, arr1));
+    }
+    
+    @Test 
+    public void equal() {
+    	double[][] arr1 = {{1,2},{3,4}};
+    	double[][] arr2 = {{1,2},{3,4}};
+    	double[][] arr3 = {{},{}};
+    	
+    	assertTrue("Should return true", DataUtilities.equal(arr1, arr2));
+    	assertTrue("Should return true", DataUtilities.equal(arr2, arr1));
+    	assertTrue("Should return true", DataUtilities.equal(arr3, arr3));
+    }
+    
+    @Test
+    public void cloneEmpty() {
+    	double[][] empty = {{}};
+    	assertEquals(DataUtilities.clone(empty), empty);
+    }
+    
+    @Test
+    public void cloneNull() {
+    	double[][] empty = null;
+    	thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Null 'source' argument.");
+    	assertEquals(DataUtilities.clone(empty), empty);
+    }
+    
+    @Test
+    public void cloneHalfEmpty() {
+    	double[][] halfEmpty = {{5}};
+    	assertEquals(DataUtilities.clone(halfEmpty), halfEmpty);
+    }
+    
+    @Test
+    public void cloneNormalArray() {
+    	double[][] arr = {{5,5},{-3,2}};
+    	assertEquals(DataUtilities.clone(arr), arr);
+    }
+    
+ // #1
+    @Test
+    public void calculateColumnTotalWithValidRowsNullDataShouldThrowException() {
+    	int[] arr = {0};
+    	thrown.expect(InvalidParameterException.class);
+        thrown.expectMessage("Index: 1, Size: null");
+        DataUtilities.calculateColumnTotal(null, 1, arr);
+    }
+    
+    // #2
+    @Test
+    public void calculateColumnTotalWithValidRowsOfColumn0ShouldReturn3() {
+    	int[] rows = {0,1};
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D twoByThreeValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(twoByThreeValues2D).getRowCount();
+            will(returnValue((2))); 
+            
+            oneOf(twoByThreeValues2D).getColumnCount();
+            will(returnValue((3))); 
+            
+	        oneOf(twoByThreeValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 2);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 2);
+	        will(returnValue((2)));
+	        
+        }});
+        
+    	assertEquals("The sum of column 0, row 1,2 should return 2",
+    		        2, DataUtilities.calculateColumnTotal(twoByThreeValues2D, 0, rows1), .000000001d);
+    }
+    
+    // #3
+    @Test
+    public void calculateColumnTotalWithValidRowsOfColumn1ShouldReturn0() { 
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D twoByThreeValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(twoByThreeValues2D).getRowCount();
+            will(returnValue((2))); 
+            
+            oneOf(twoByThreeValues2D).getColumnCount();
+            will(returnValue((3))); 
+            
+	        oneOf(twoByThreeValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 1);
+	        will(returnValue((null)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 2);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 2);
+	        will(returnValue((2)));
+	        
+        }});
+        
+    	assertEquals("The sum of column 1 should return 0",
+    		        0, DataUtilities.calculateColumnTotal(twoByThreeValues2D, 1, rows1), .000000001d);
+    }
+    
+    // #4
+    @Test
+    public void calculateColumnTotalWithValidRowsOfColumn2ShouldReturn3() {
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D twoByThreeValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(twoByThreeValues2D).getRowCount();
+            will(returnValue((2))); 
+            
+            oneOf(twoByThreeValues2D).getColumnCount();
+            will(returnValue((3))); 
+            
+	        oneOf(twoByThreeValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 2);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 2);
+	        will(returnValue((2)));
+	        
+        }});
+        
+    	assertEquals("The sum of column 0 should return 3",
+    		        3, DataUtilities.calculateColumnTotal(twoByThreeValues2D, 2, rows1), .000000001d);
+    }
+    
+    // #5
+    @Test
+    public void belowZeroColumnWithValidRowsShouldThrowException() {
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D twoByThreeValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(twoByThreeValues2D).getRowCount();
+            will(returnValue((2))); 
+            
+            oneOf(twoByThreeValues2D).getColumnCount();
+            will(returnValue((3))); 
+            
+	        oneOf(twoByThreeValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 2);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 2);
+	        will(returnValue((2)));
+	        
+        }});
+        
+    	thrown.expect(IndexOutOfBoundsException.class);
+        thrown.expectMessage("Index: -1, Size: 3");
+        DataUtilities.calculateColumnTotal(twoByThreeValues2D, -1, rows1);
+    }
+    
+    // #6
+    @Test
+    public void aboveColumnCountColumnWithValidRowsShouldThrowException() {
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D twoByThreeValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(twoByThreeValues2D).getRowCount();
+            will(returnValue((2))); 
+            
+            oneOf(twoByThreeValues2D).getColumnCount();
+            will(returnValue((3))); 
+            
+	        oneOf(twoByThreeValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 2);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 2);
+	        will(returnValue((2)));
+	        
+        }});
+        
+    	thrown.expect(IndexOutOfBoundsException.class);
+        thrown.expectMessage("Index: 3, Size: 3");
+        DataUtilities.calculateColumnTotal(twoByThreeValues2D, 3, rows1);
+    }
+    
+    @Test
+    public void calculateRowTotalWithValidColsNullDataShouldThrowException() {
+    	thrown.expect(InvalidParameterException.class);
+        thrown.expectMessage("Index: 1, Size: null");
+        DataUtilities.calculateRowTotal(null, 1, cols1);
+    }
+    
+    // #2
+    @Test
+    public void calculateRowTotalOfRowWithValidCols0ShouldReturn2() {   
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D threeByTwoValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(threeByTwoValues2D).getRowCount();
+            will(returnValue((3))); 
+            
+            oneOf(threeByTwoValues2D).getColumnCount();
+            will(returnValue((2))); 
+            
+	        oneOf(threeByTwoValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(threeByTwoValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(threeByTwoValues2D).getValue(2, 0);
+	        will(returnValue((3))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(2, 1);
+	        will(returnValue((3)));
+	        
+        }});
+        
+    	assertEquals("The sum of row 0 should return 2",
+    		        2, DataUtilities.calculateRowTotal(threeByTwoValues2D, 0, cols1), .000000001d);
+    }
+    
+    // #3
+    @Test
+    public void calculateRowTotalWithValidColsOfRow1ShouldReturn0() { 
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D threeByTwoValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(threeByTwoValues2D).getRowCount();
+            will(returnValue((3))); 
+            
+            oneOf(threeByTwoValues2D).getColumnCount();
+            will(returnValue((2))); 
+            
+	        oneOf(threeByTwoValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(threeByTwoValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(1, 1);
+	        will(returnValue((null)));
+	        
+	        oneOf(threeByTwoValues2D).getValue(2, 0);
+	        will(returnValue((3))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(2, 1);
+	        will(returnValue((3)));
+	        
+        }});
+        
+    	assertEquals("The sum of row 1 should return 0",
+    		        0, DataUtilities.calculateColumnTotal(threeByTwoValues2D, 1, cols1), .000000001d);
+    }
+    
+    // #4
+    @Test
+    public void calculateRowTotalWithValidColsOfRow2ShouldReturn6() {
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D threeByTwoValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(threeByTwoValues2D).getRowCount();
+            will(returnValue((3))); 
+            
+            oneOf(threeByTwoValues2D).getColumnCount();
+            will(returnValue((2))); 
+            
+	        oneOf(threeByTwoValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(threeByTwoValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(threeByTwoValues2D).getValue(2, 0);
+	        will(returnValue((3))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(2, 1);
+	        will(returnValue((3)));
+	        
+        }});
+        
+    	assertEquals("The sum of row 2 should return 6",
+    		        6, DataUtilities.calculateRowTotal(threeByTwoValues2D, 2, cols1), .000000001d);
+    }
+    
+    // #5
+    @Test
+    public void belowZeroRowWithValidColsShouldThrowException() {
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D threeByTwoValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(threeByTwoValues2D).getRowCount();
+            will(returnValue((3))); 
+            
+            oneOf(threeByTwoValues2D).getColumnCount();
+            will(returnValue((2))); 
+            
+	        oneOf(threeByTwoValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(threeByTwoValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(threeByTwoValues2D).getValue(2, 0);
+	        will(returnValue((3))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(2, 1);
+	        will(returnValue((3)));
+	        
+        }});
+        
+    	thrown.expect(IndexOutOfBoundsException.class);
+        thrown.expectMessage("Index: -1, Size: 3");
+        DataUtilities.calculateRowTotal(threeByTwoValues2D, -1, cols1);
+    }
+    
+    // #6
+    @Test
+    public void aboveRowCountColumnWithValidColsShouldThrowException() {
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D threeByTwoValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(threeByTwoValues2D).getRowCount();
+            will(returnValue((3))); 
+            
+            oneOf(threeByTwoValues2D).getColumnCount();
+            will(returnValue((2))); 
+            
+	        oneOf(threeByTwoValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(threeByTwoValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(threeByTwoValues2D).getValue(2, 0);
+	        will(returnValue((3))); 
+	        
+	        oneOf(threeByTwoValues2D).getValue(2, 1);
+	        will(returnValue((3)));
+	        
+        }});
+        
+    	thrown.expect(IndexOutOfBoundsException.class);
+        thrown.expectMessage("Index: 3, Size: 3");
+        DataUtilities.calculateColumnTotal(threeByTwoValues2D, 3, cols1);
+    }
+    
 
     @After
     public void tearDown() throws Exception {

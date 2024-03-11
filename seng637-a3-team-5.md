@@ -164,9 +164,31 @@ As shown in the screenshots below, the original coverages were as follows:
 
 ### Final Coverage from the Lab 3 Test Suite
 
+As shown in the screenshots below, our updated test suite for Lab 3 now achieves the following coverages:
 
-// TODO
+Method Coverage: 
+- Range (100%)
+- DataUtilities(100%)
 
+![Final Method Coverage](./media/FinalMethodCoverage.png)
+
+Line Coverage: 
+- Range (90.8%)
+- DataUtilities (88.5%)
+
+![Final Line Coverage](./media/FinalLineCoverage.png)
+
+Branch Coverage:
+- Range(86.6%)
+- DataUtilities (71.9%)
+
+![Final Branch Coverage](./media/FinalBranchCoverage.png)
+
+Of note, we hit every required metric from the test plan, with the exception of Line Coverage for DataUtilities (88.5% vs 90%).
+This was due to the fact that DataUtilities had a number of lines of code which were inacessible to the testers, as shown in the screnshots below. There is no logic or valid set of object parameters that are possible in order to access these lines, and they are good candidates to be removed. 
+
+![Inacessible Code](./media/InaccesibleCode1.png)
+![Inacessible Code 2](./media/InaccesibleCode2.png)
 
 # 6 Pros and Cons of coverage tools used and Metrics you report
 
@@ -195,7 +217,7 @@ As shown in the screenshots below, the original coverages were as follows:
 - No longer supported or updated by Atlassian. 
 ## Reporting Metrics
 ### Line Coverage
-Line coverage was very effective in ensuring that we explored nearly all of the statements in the code, and was a good metric for testing the correctness of individual statements. 
+Line coverage was very effective in ensuring that we explored nearly all of the statements in the code, and was a good metric for testing the correctness of individual statements. It was also effective at finding situations in the code where the logic made it impossible to enter a code block.
 
 It does not provide a good metric for confirming data flow and logic, as incorrect values and logic will still show as successful executions of a line. 
 
@@ -217,6 +239,8 @@ Ultimately, the lab has shown us that it it best to rely on a combination of the
 # 7 A comparison on the advantages and disadvantages of requirements-based test generation and coverage-based test generation.
 
 During this lab, we focused mainly on coverage-based analysis and test generation. Talk about how coverage-based test generation doesn't necessarily determine if the code is meeting the requirements.
+
+
 # 8 A discussion on how the team work/effort was divided and managed
 
 Initially, each member of the group completed the steps to setup and import the previous Lab into a new project, and install all of the dependencies. Each member completed the familiarization portion of the Lab in order to gain sufficient understanding to contribute to the lab work. 
