@@ -9,8 +9,6 @@
 | Christopher Proc |     |
 | Sean Buchanan |     |
 
-(Note that some labs require individual reports while others require one report
-for each group. Please see each lab document for details.)
 
 # 1 Introduction
 
@@ -153,31 +151,94 @@ Text…
 
 # 5 A detailed report of the coverage achieved of each class and method (a screen shot from the code cover results in green and red color would suffice)
 
-Text…
+### Initial Coverage from the Lab 2 Test Suite
+
+As shown in the screenshots below, the original coverages were as follows:
+- Range: Statement Coverage (18.6%), Branch Coverage (18.3%)
+- Data Utilities; Statement Coverage(48.7%), Branch Coverage (31.2%)
+
+![Original statement coverage](.\media\StatementCoverageOriginal.PNG)
+
+![Original Branch Coverage](.\media\BranchCoverageOriginal.PNG)
+
+
+### Final Coverage from the Lab 3 Test Suite
+
+
+// TODO
+
 
 # 6 Pros and Cons of coverage tools used and Metrics you report
 
+## Coverage Tools
 ### EclEmma
 
 #### Pros
+- Very easy integration with Eclipse.
+- Intuitive to use.
+
 #### Cons
+- Lacks good documentation about certain features, or detailed definitions of certain metrics.
+- No condition coverage metric
+
+### Code Cover
+#### Pros
+- Supports condition coverage metrics
+#### Cons
+- Eclipse plugin installation website no longer hosted, could not install.
+
+### Clover
+
+### Pros
+- Now an open source project
+### Cons
+- No longer supported or updated by Atlassian. 
+## Reporting Metrics
+### Line Coverage
+Line coverage was very effective in ensuring that we explored nearly all of the statements in the code, and was a good metric for testing the correctness of individual statements. 
+
+It does not provide a good metric for confirming data flow and logic, as incorrect values and logic will still show as successful executions of a line. 
+
+### Method Coverage
+A baseline metric, Method coverage was useful in ensuring that testing does not miss any major features of the class, however it does not provide enough granularity in order to ensure that the entire class is tested effectively. 
+
+### Branch Coverage
+Branch coverage was very effective in identifying places in the code where we had failed to fully test the conditional uses of our variables. It provides a good metric for testing the logical flow of our program. It also lent itself very well to providing good candiates for input values for the unit tests.
+
+A major drawback of branch coverage was the fact that some branches are failure-handing branches, and should not necessarily be entered through normal code flow, or are guarded by other checks. These branches were unable to be tested directly. 
+
+### Condition Coverage
+Condition Coverage is closely related to branch coverage, as boolean conditions are most often used in branch determination. Where it differs is in fully evaluating all possible True/False condition combinations at each of these junctions. This metric seems like it could be better addressed when required through a truth-table analysis, as many combinations of boolean values will often be identical with respect to code execution. Unfortunately, none of the tools that we were able to install could provide condition coverage. Code Cover supports this metric, but we were unable to install and use the tool.
+
+### Conclusion
+
+Ultimately, the lab has shown us that it it best to rely on a combination of these metrics in order to ensure that the feature we are testing is fully covered and adequately explored. 
 
 # 7 A comparison on the advantages and disadvantages of requirements-based test generation and coverage-based test generation.
 
-- Talk about how coverage-based test generation doesn't necessarily determine if the code is meeting the requirements.
+During this lab, we focused mainly on coverage-based analysis and test generation. Talk about how coverage-based test generation doesn't necessarily determine if the code is meeting the requirements.
 # 8 A discussion on how the team work/effort was divided and managed
 
-Text…
+Initially, each member of the group completed the steps to setup and import the previous Lab into a new project, and install all of the dependencies. Each member completed the familiarization portion of the Lab in order to gain sufficient understanding to contribute to the lab work. 
+
+The group worked closely together to complete the analysis of the DU-pairs and DFG diagrams in section 2. This allowed us to discuss and check the work together, and to come to a common understanding of the type of analysis that would help our design of the unit tests. The entire group then discussed and agreed upon the high level testing plan created in section 3.
+
+Members then split off individually in order to build extra test cases as needed in order to achieve the required coverage of the SUT, as stated in the Lab instructions. While this part was done individually, close communication was necessary in order to prevent any duplication of effort. The individual test cases were then compile when completed, and the final analysis of the test coverage was done as a group.
+
+All team members contributed equally throughout the lab work itself, and in the writing of the report.
 
 # 9 Any difficulties encountered, challenges overcome, and lessons learned from performing the lab
 
 Difficulties and Challenges:
-- Managing iterative java projects with verions with different dependencies
+- It was occasionally difficult during this project to deal with managing the iteration from Lab 2. Some of the dependency libraries used different versions of utilities, which led to some conflicts and overlap when trying to package the complete Lab3.  
+- Some of the code coverage tools are legacy and are no longer supported, or are unavailable. It was hard to find recent sources of information or troubleshooting on some (Code Coverage), and some had been turned into unsuppported open source projects (Clover)
+- Having separate github repositories for each group member rather than branches or forks made it difficult to share and version control our code at times. 
 
 Lessons Learned:
-- Importance of keeping test suites neat and well commented (Abililty to find tests for the methods you're interested in)
+- We learned how important it is to keep test suites neat, organized, and well commented. While it was convenient to continue writing test cases in a single test suite, it became very difficult after a while to locate and identify specific tests relating to individual methods or use cases. In hindsight, it may have been more effective to invest time up front to breaking down the test cases into smaller packages according to method, in order to keep them more accessible and organized. 
 
 
 # 10 Comments/feedback on the lab itself
+- Overall the lab was very well designed, and gave us a good overview of white-box testing and code coverage. We really appreciated the effort that was made to provide complete and detailed instructions for setting up the environment. The lab was very effective in teaching the concepts required.
 
-- Really liked the effort that was put into the setup instructions. 
+- As mentioned in section 9, some of the tools mentioned in the lab are getting quite dated. While EclEmma is still supported and was very effective for this lab, it may be helpful to do a review and refresh of the tools used in this lab in order to see if current trends have moved to different tools.  
