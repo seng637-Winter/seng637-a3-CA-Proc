@@ -22,5 +22,17 @@
 	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/Jmock/jmock-junit4-2.5.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/Jmock/jmock-legacy-2.5.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/Jmock/jmock-script-2.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/bsh-core-2.0b4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/cglib-2.1_3-src.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/gnujaxp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/hamcrest-library-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/jcommon-1.0.0-rc1-cvs.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/jcommon-1.0.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/junit.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/junit-old.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/objenesis-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Chris/Documents/SENG/SENG637/Assignments/seng637-a3-CA-Proc/seng637-a3-artifacts/jfreechart-1.0.19/lib/A2 Archive/servlet.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
