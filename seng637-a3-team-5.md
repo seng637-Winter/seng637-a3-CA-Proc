@@ -147,7 +147,49 @@ All testing will be done on the SUT, JFreeChart version 1.0.19
 
 # 4 A high level description of five selected test cases you have designed using coverage information, and how they have increased code coverage
 
-Text…
+### 1. Range Constrctor Test
+    @Test
+    public void rangeConstructorLowerGreaterThanUpperThrowsException() {
+    	thrown.expect(IllegalArgumentException.class);
+        Range expectedRange = new Range(5.0, 2.0);
+    }
+
+Our coverage results showed us that we were not entering into the error checking code within the range constructor. This test attempts to create a Range object with lower > higher.
+
+Coverage Increase: Line: 3 (2.5%), Branch: 1 (1.2%)
+
+### 2. Combine Ignoring NaN
+
+    @Test
+    public void combineIgnoringNaNAllValuesNaN() {
+    	Range nanLower = new Range(Double.NaN, Double.NaN);
+    	Range nanUpper = new Range(Double.NaN, Double.NaN);
+    	
+    	assertEquals("combineIgnoringNan(Range[NaN, NaN], Range[NaN, NaN]) should return null", null, Range.combineIgnoringNaN(nanLower, nanUpper));
+    }
+Our coverage results showed us that the Range class had two private static method, min and max, which we couldn't access directly. Instead, we wrote this test class in order to use combineIgnoringNaN. This allowed us to cover
+- combineIgnoringNaN
+- min
+- max
+- getLowerBound
+- getUpperBound
+- isNaNRange
+
+all with a small number of test cases.
+
+Coverage increase: Line: 10 (8.4%), Branch: 6 (7.3%)
+
+### 3. toString
+
+    @Test
+    public void toStringReturnsCorrectString() {
+    	assertEquals("The toString method should return 'Range[<lower>,<upper>]",
+    			"Range[10.0,21.0]", posPosRange.toString());
+    }
+
+Our coverage results showed us that we hadn't tested the toString method. While it represents only a single line and branch, it was essential to meet the 100% method coverage criteria from the test plan.
+
+Coverage increage: Line: 1 (0.8%), Branch: 1 (1.2%)
 
 # 5 A detailed report of the coverage achieved of each class and method (a screen shot from the code cover results in green and red color would suffice)
 
