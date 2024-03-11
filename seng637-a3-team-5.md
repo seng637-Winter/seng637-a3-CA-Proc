@@ -22,7 +22,7 @@ This section outlines the manual analysis of two methods, DataUtilities.calculat
 
 #### Data Flow Graph:
 
-![Data Flow Graph](.\media\CalculateColumnTotalDFG.png)
+![Data Flow Graph](./media/CalculateColumnTotalDFG.png)
 
 #### Definitions and Uses in each statement:
 | Statement| Defined| Used|
@@ -69,7 +69,7 @@ This section outlines the manual analysis of two methods, DataUtilities.calculat
 
 #### Data Flow Graph:
 
-![Data Flow Graph](.\media\getLengthCFG.png)
+![Data Flow Graph](./media/getLengthCFG.png)
 
 #### Definitions and Uses in each statement:
 | Statement| Defined| Used|
@@ -157,9 +157,9 @@ As shown in the screenshots below, the original coverages were as follows:
 - Range: Statement Coverage (18.6%), Branch Coverage (18.3%)
 - Data Utilities; Statement Coverage(48.7%), Branch Coverage (31.2%)
 
-![Original statement coverage](.\media\StatementCoverageOriginal.PNG)
+![Original statement coverage](./media/StatementCoverageOriginal.png)
 
-![Original Branch Coverage](.\media\BranchCoverageOriginal.PNG)
+![Original Branch Coverage](./media/BranchCoverageOriginal.png)
 
 
 ### Final Coverage from the Lab 3 Test Suite
