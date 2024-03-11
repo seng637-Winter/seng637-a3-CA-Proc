@@ -189,7 +189,65 @@ Coverage increase: Line: 10 (8.4%), Branch: 6 (7.3%)
 
 Our coverage results showed us that we hadn't tested the toString method. While it represents only a single line and branch, it was essential to meet the 100% method coverage criteria from the test plan.
 
-Coverage increage: Line: 1 (0.8%), Branch: 1 (1.2%)
+Coverage increase: Line: 1 (0.8%), Branch: 1 (1.2%)
+
+### 4. Equal with Nulls
+
+    @Test
+    public void testEqualWithNull() {
+    	double[][] arr = {{1,2},{3,4}};
+    	//behaviour is undefined for two nulls (assumed false here)
+    	assertFalse("Should return false", DataUtilities.equal(null, arr));
+    	assertFalse("Should return false", DataUtilities.equal(arr, null));
+    	assertFalse("Should return false", DataUtilities.equal(null, null));
+    	
+    }
+
+Coverage showed that we weren't accounting for nulls when calling the Equals method. 
+
+Coverage increase: Line: (1.5%), Branch: (7%)
+
+### 5. Calculate Column Total 
+        @Test
+    public void calculateColumnTotalWithValidRowsOfColumn0ShouldReturn3() {
+    	int[] rows = {0,1};
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D twoByThreeValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(twoByThreeValues2D).getRowCount();
+            will(returnValue((2))); 
+            
+            oneOf(twoByThreeValues2D).getColumnCount();
+            will(returnValue((3))); 
+            
+	        oneOf(twoByThreeValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 2);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 2);
+	        will(returnValue((2)));
+	        
+        }});
+        
+    	assertEquals("The sum of column 0, row 1,2 should return 2",
+    		        2, DataUtilities.calculateColumnTotal(twoByThreeValues2D, 0, rows1), .000000001d);
+    }
+
+Coverage showed that we hadn't fully covered the calculate column total in order to reach our coverage metrics. This test uses a mocked Values2D object to test. This represents a large testing effort in order to achieve a very small coverage increase. 
+
+Coverage increase: Line (0.07%), Branch (0.6%)
 
 # 5 A detailed report of the coverage achieved of each class and method (a screen shot from the code cover results in green and red color would suffice)
 
