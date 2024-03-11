@@ -147,7 +147,107 @@ All testing will be done on the SUT, JFreeChart version 1.0.19
 
 # 4 A high level description of five selected test cases you have designed using coverage information, and how they have increased code coverage
 
-Text…
+### 1. Range Constrctor Test
+    @Test
+    public void rangeConstructorLowerGreaterThanUpperThrowsException() {
+    	thrown.expect(IllegalArgumentException.class);
+        Range expectedRange = new Range(5.0, 2.0);
+    }
+
+Our coverage results showed us that we were not entering into the error checking code within the range constructor. This test attempts to create a Range object with lower > higher.
+
+Coverage Increase: Line: 3 (2.5%), Branch: 1 (1.2%)
+
+### 2. Combine Ignoring NaN
+
+    @Test
+    public void combineIgnoringNaNAllValuesNaN() {
+    	Range nanLower = new Range(Double.NaN, Double.NaN);
+    	Range nanUpper = new Range(Double.NaN, Double.NaN);
+    	
+    	assertEquals("combineIgnoringNan(Range[NaN, NaN], Range[NaN, NaN]) should return null", null, Range.combineIgnoringNaN(nanLower, nanUpper));
+    }
+Our coverage results showed us that the Range class had two private static method, min and max, which we couldn't access directly. Instead, we wrote this test class in order to use combineIgnoringNaN. This allowed us to cover
+- combineIgnoringNaN
+- min
+- max
+- getLowerBound
+- getUpperBound
+- isNaNRange
+
+all with a small number of test cases.
+
+Coverage increase: Line: 10 (8.4%), Branch: 6 (7.3%)
+
+### 3. toString
+
+    @Test
+    public void toStringReturnsCorrectString() {
+    	assertEquals("The toString method should return 'Range[<lower>,<upper>]",
+    			"Range[10.0,21.0]", posPosRange.toString());
+    }
+
+Our coverage results showed us that we hadn't tested the toString method. While it represents only a single line and branch, it was essential to meet the 100% method coverage criteria from the test plan.
+
+Coverage increase: Line: 1 (0.8%), Branch: 1 (1.2%)
+
+### 4. Equal with Nulls
+
+    @Test
+    public void testEqualWithNull() {
+    	double[][] arr = {{1,2},{3,4}};
+    	//behaviour is undefined for two nulls (assumed false here)
+    	assertFalse("Should return false", DataUtilities.equal(null, arr));
+    	assertFalse("Should return false", DataUtilities.equal(arr, null));
+    	assertFalse("Should return false", DataUtilities.equal(null, null));
+    	
+    }
+
+Coverage showed that we weren't accounting for nulls when calling the Equals method. 
+
+Coverage increase: Line: (1.5%), Branch: (7%)
+
+### 5. Calculate Column Total 
+        @Test
+    public void calculateColumnTotalWithValidRowsOfColumn0ShouldReturn3() {
+    	int[] rows = {0,1};
+    	org.jmock.Mockery Values2DMock= new Mockery();
+    	final Values2D twoByThreeValues2D = Values2DMock.mock(Values2D.class);
+        Values2DMock.checking(new org.jmock.Expectations()
+        {{
+        	oneOf(twoByThreeValues2D).getRowCount();
+            will(returnValue((2))); 
+            
+            oneOf(twoByThreeValues2D).getColumnCount();
+            will(returnValue((3))); 
+            
+	        oneOf(twoByThreeValues2D).getValue(0, 0);
+	        will(returnValue((1))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 1);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(0, 2);
+	        will(returnValue((1)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 0);
+	        will(returnValue((2))); 
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 1);
+	        will(returnValue((2)));
+	        
+	        oneOf(twoByThreeValues2D).getValue(1, 2);
+	        will(returnValue((2)));
+	        
+        }});
+        
+    	assertEquals("The sum of column 0, row 1,2 should return 2",
+    		        2, DataUtilities.calculateColumnTotal(twoByThreeValues2D, 0, rows1), .000000001d);
+    }
+
+Coverage showed that we hadn't fully covered the calculate column total in order to reach our coverage metrics. This test uses a mocked Values2D object to test. This represents a large testing effort in order to achieve a very small coverage increase. 
+
+Coverage increase: Line (0.07%), Branch (0.6%)
 
 # 5 A detailed report of the coverage achieved of each class and method (a screen shot from the code cover results in green and red color would suffice)
 
@@ -238,7 +338,27 @@ Ultimately, the lab has shown us that it it best to rely on a combination of the
 
 # 7 A comparison on the advantages and disadvantages of requirements-based test generation and coverage-based test generation.
 
-During this lab, we focused mainly on coverage-based analysis and test generation. Talk about how coverage-based test generation doesn't necessarily determine if the code is meeting the requirements.
+### Requirements Based Testing
+Pros
+- Requirements based testing provides a very clear link between the tests and the objectives. 
+- Pass criteria is easy to determine if there is sufficient documentation about expected behaviour.
+- If the code passes the tests, it is doing what we require. 
+
+Cons
+- Requires significantly more time analyzing the SUT for boundary conditions, equivalence classes, and test inputs.
+- More testing is needed on each feature in order to ensure that all requirements are checked.
+- Does not necessarily identify things such as unused or inacessible code, nor check all predicate conditions.
+
+### Coverage Based Testing
+Pros
+- Faster to write test cases to increase coverage. Areas that need more work are readily visible, rather than requiring complex analysis to identify.
+- Good at proving line-by-line correctness of individual statements.
+- Candidate test case inputs are obvious to the tester when reviewing branch conditionals and loop conditions.
+- Easily identified areas of unreachable or inacessible code.
+
+Cons
+- Not a perfect metric. Some areas of the code can be inacessible to the tester no matter what inputs or tests they write, such as error handling code. 
+- Just because the code is covered, does not guarantee that it meets the requirements or is error free for all inputs. 
 
 
 # 8 A discussion on how the team work/effort was divided and managed
