@@ -338,7 +338,27 @@ Ultimately, the lab has shown us that it it best to rely on a combination of the
 
 # 7 A comparison on the advantages and disadvantages of requirements-based test generation and coverage-based test generation.
 
-During this lab, we focused mainly on coverage-based analysis and test generation. Talk about how coverage-based test generation doesn't necessarily determine if the code is meeting the requirements.
+### Requirements Based Testing
+Pros
+- Requirements based testing provides a very clear link between the tests and the objectives. 
+- Pass criteria is easy to determine if there is sufficient documentation about expected behaviour.
+- If the code passes the tests, it is doing what we require. 
+
+Cons
+- Requires significantly more time analyzing the SUT for boundary conditions, equivalence classes, and test inputs.
+- More testing is needed on each feature in order to ensure that all requirements are checked.
+- Does not necessarily identify things such as unused or inacessible code, nor check all predicate conditions.
+
+### Coverage Based Testing
+Pros
+- Faster to write test cases to increase coverage. Areas that need more work are readily visible, rather than requiring complex analysis to identify.
+- Good at proving line-by-line correctness of individual statements.
+- Candidate test case inputs are obvious to the tester when reviewing branch conditionals and loop conditions.
+- Easily identified areas of unreachable or inacessible code.
+
+Cons
+- Not a perfect metric. Some areas of the code can be inacessible to the tester no matter what inputs or tests they write, such as error handling code. 
+- Just because the code is covered, does not guarantee that it meets the requirements or is error free for all inputs. 
 
 
 # 8 A discussion on how the team work/effort was divided and managed
