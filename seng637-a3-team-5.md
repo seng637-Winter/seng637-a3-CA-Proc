@@ -12,11 +12,11 @@
 
 # 1 Introduction
 
-The purpose of Lab 3 is to conduct white-box testing using code coverage tools in order to learn and demonstrate the ability to plan, execute, and evaluate a comprehensive test suite on a function System Under Test (SUT). We will build upon the test suite that was created during Lab 2, and continue expand the coverage of our test suite against the JFreeChart package as our SUT. 
+The purpose of Lab 3 is to conduct white-box testing using code coverage tools in order to learn and demonstrate the ability to plan, execute, and evaluate a comprehensive test suite on a functional System Under Test (SUT). We will build upon the test suite that was created during Lab 2, and continue expand the coverage of our test suite against the JFreeChart package as our SUT. 
 
 # 2 Manual data-flow coverage calculations for DataUtilities.calculateColumnTotal and Range.getLength methods.
 
-This section outlines the manual analysis of two methods, DataUtilities.calculateColumnTotal(), and Range.getLength(). Each method was manually evaluated on a line-by-line basis in order to build a Data Flow Graph, D-U pair list for each variable, and then we evaluated the coverage of our Lab 2 test cases. 
+This section outlines the manual analysis of two methods, DataUtilities.calculateColumnTotal(), and Range.getLength(). Each method was manually evaluated on a line-by-line basis in order to build a Data Flow Graph, D-U pair list for each variable, and then evaluated for the coverage of our Lab 2 test cases. 
 
 ## Analysis of DataUtilities.calculateColumnTotal()
 
@@ -140,7 +140,7 @@ All testing will be done on the SUT, JFreeChart version 1.0.19
 ## 4. Deliverables
 
     Testers will deliver: 
-    - functioning source code which encompasses the test runner, and all of the individual unit tests for the Range and DataUtilities classes, specifically.
+    - functioning source code which encompasses the test runner, and all of the individual unit tests for the Range and DataUtilities classes.
     - An analysis of the final coverage of the classes under test.
     - A detailed description of five individual unit tests
     - A report on the execution of the test plan.
@@ -167,7 +167,7 @@ Coverage Increase: Line: 3 (2.5%), Branch: 1 (1.2%)
     	
     	assertEquals("combineIgnoringNan(Range[NaN, NaN], Range[NaN, NaN]) should return null", null, Range.combineIgnoringNaN(nanLower, nanUpper));
     }
-Our coverage results showed us that the Range class had two private static method, min and max, which we couldn't access directly. Instead, we wrote this test class in order to use combineIgnoringNaN. This allowed us to cover
+Our coverage results showed us that the Range class had two private static methods, min and max, which we couldn't access directly. Instead, we wrote this test class in order to use combineIgnoringNaN. This allowed us to cover:
 - combineIgnoringNaN
 - min
 - max
@@ -245,7 +245,7 @@ Coverage increase: Line: (1.5%), Branch: (7%)
     		        2, DataUtilities.calculateColumnTotal(twoByThreeValues2D, 0, rows1), .000000001d);
     }
 
-Coverage showed that we hadn't fully covered the calculate column total in order to reach our coverage metrics. This test uses a mocked Values2D object to test. This represents a large testing effort in order to achieve a very small coverage increase. 
+Coverage showed that we hadn't fully covered the calculate column total method in order to reach our coverage metrics. This test uses a mocked Values2D object to provide values to the method under test. This is an example of a large testing effort in order to achieve a very small coverage increase. 
 
 Coverage increase: Line (0.07%), Branch (0.6%)
 
@@ -367,14 +367,14 @@ Initially, each member of the group completed the steps to setup and import the 
 
 The group worked closely together to complete the analysis of the DU-pairs and DFG diagrams in section 2. This allowed us to discuss and check the work together, and to come to a common understanding of the type of analysis that would help our design of the unit tests. The entire group then discussed and agreed upon the high level testing plan created in section 3.
 
-Members then split off individually in order to build extra test cases as needed in order to achieve the required coverage of the SUT, as stated in the Lab instructions. While this part was done individually, close communication was necessary in order to prevent any duplication of effort. The individual test cases were then compile when completed, and the final analysis of the test coverage was done as a group.
+Members then split off individually in order to build extra test cases as needed in order to achieve the required coverage of the SUT, as stated in the Lab instructions. While this part was done individually, close communication was necessary in order to prevent any duplication of effort. The individual test cases were then combined when completed, and the final analysis of the test coverage was done as a group.
 
 All team members contributed equally throughout the lab work itself, and in the writing of the report.
 
 # 9 Any difficulties encountered, challenges overcome, and lessons learned from performing the lab
 
 Difficulties and Challenges:
-- It was occasionally difficult during this project to deal with managing the iteration from Lab 2. Some of the dependency libraries used different versions of utilities, which led to some conflicts and overlap when trying to package the complete Lab3.  
+- It was occasionally difficult during this project to deal with managing the iteration from Lab 2. Some of the dependency libraries used different versions of utilities, which led to some conflicts and overlap when trying to package the completed Lab3.  
 - Some of the code coverage tools are legacy and are no longer supported, or are unavailable. It was hard to find recent sources of information or troubleshooting on some (Code Coverage), and some had been turned into unsuppported open source projects (Clover)
 - Having separate github repositories for each group member rather than branches or forks made it difficult to share and version control our code at times. 
 
